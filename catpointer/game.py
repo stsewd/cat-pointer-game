@@ -13,6 +13,8 @@ class App:
 
     max_jump = 12  # Needs to be even
     max_wait = 20
+    ceiling = 35
+    floor = 65
 
     def __init__(self):
         pyxel.init(150, 90, caption='Cat Pointer Game')
@@ -20,14 +22,11 @@ class App:
             0, 0,
             path.join(base_path, 'assets/cat_16x16.png')
         )
-        self.ceiling = 35
-        self.floor = 75
         self.cat = Cat(
             x=(pyxel.width // 2) - (Cat.width // 2),
             y=self.floor - Cat.width,
             drawing_area=(0, 0, pyxel.width, self.floor)
         )
-
         self.point = Point(
             x=pyxel.width//2,
             y=self.ceiling
@@ -98,7 +97,7 @@ class App:
         self.draw_title()
         self.draw_cat()
         self.draw_point()
-        self.draw_score()
+        self.draw_footer()
 
     def draw_title(self):
         title = 'Cat Pointer'
@@ -129,8 +128,19 @@ class App:
             self.point.x, self.point.y, radius, color
         )
 
-    def draw_score(self):
-        pyxel.text(10, self.floor + 5, f'Score: {self.score}', 0)
+    def draw_footer(self):
+        # Score
+        pyxel.text(10, self.floor + 5, f'Score: {self.score}', 5)
+
+        # Instrucctions
+        pyxel.text(
+            60,
+            self.floor + 5,
+            'Jump: [space]\n'
+            'Left: [a] - Right: [d]\n'
+            'Quit: [q]',
+            6
+        )
 
 
 if __name__ == "__main__":
