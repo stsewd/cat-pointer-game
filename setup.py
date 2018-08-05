@@ -2,9 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='Cat Pointer Game',
-    version='1.0',
+    version='0.1.0',
     author='Santos Gallegos',
     author_email='santos_g@outlook.com',
+    license='MIT',
     url='https://github.com/stsewd/cat-pointer-game',
     packages=find_packages(),
     package_data={
@@ -17,4 +18,9 @@ setup(
         ],
     },
     python_requires='>=3.7',
+    classifiers=[
+        'Topic :: Games :: Retro',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.7',
+    ]
 )
