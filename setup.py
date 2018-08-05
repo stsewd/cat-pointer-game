@@ -10,9 +10,11 @@ setup(
     package_data={
         '': ['game/assets/'],
     },
+    install_requires=['pyxel<1'],
     entry_points={
         'console_scripts': [
             'catpointer = catpointer.game:App',
         ],
     },
+    python_requires='>=3.7',
 )
