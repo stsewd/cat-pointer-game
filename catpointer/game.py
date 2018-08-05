@@ -13,11 +13,11 @@ class App:
 
     max_jump = 12  # Needs to be even
     max_wait = 20
-    ceiling = 35
-    floor = 65
+    ceiling = 50
+    floor = 85
 
     def __init__(self):
-        pyxel.init(150, 90, caption='Cat Pointer Game')
+        pyxel.init(300, 160, caption='Cat Pointer Game')
         pyxel.image(0).load(
             0, 0,
             path.join(base_path, 'assets/cat_16x16.png')
@@ -130,11 +130,11 @@ class App:
 
     def draw_footer(self):
         # Score
-        pyxel.text(10, self.floor + 5, f'Score: {self.score}', 5)
+        pyxel.text(35, self.floor + 5, f'Score: {self.score}', 5)
 
         # Instrucctions
         pyxel.text(
-            60,
+            130,
             self.floor + 5,
             'Jump: [space]\n'
             'Left: [a] - Right: [d]\n'
