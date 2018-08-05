@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Cat Pointer Game',
+    name='pyxel-catpointer',
     version='0.1.0',
     author='Santos Gallegos',
     author_email='santos_g@outlook.com',
