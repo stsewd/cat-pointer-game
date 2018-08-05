@@ -23,5 +23,5 @@ setup(
         'Topic :: Games/Entertainment :: Arcade',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.7',
-    ]
+    ],
 )
