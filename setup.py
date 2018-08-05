@@ -19,7 +19,7 @@ setup(
     },
     python_requires='>=3.7',
     classifiers=[
-        'Topic :: Games :: Retro',
+        'Topic :: Games/Entertainment :: Arcade',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.7',
     ]
