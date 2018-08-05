@@ -1,6 +1,8 @@
-import pyxel
+import copy
 import random
 from os import path
+
+import pyxel
 
 from .models import Cat, Point
 
@@ -10,7 +12,7 @@ base_path = path.dirname(__file__)
 class App:
 
     max_jump = 12  # Needs to be even
-    wait_time = 60
+    max_wait = 20
 
     def __init__(self):
         pyxel.init(150, 90, caption='Cat Pointer Game')
@@ -18,8 +20,7 @@ class App:
             0, 0,
             path.join(base_path, 'assets/cat_16x16.png')
         )
-
-        self.ceiling = 20
+        self.ceiling = 35
         self.floor = 75
         self.cat = Cat(
             x=(pyxel.width // 2) - (Cat.width // 2),
@@ -27,13 +28,14 @@ class App:
             drawing_area=(0, 0, pyxel.width, self.floor)
         )
 
-        self.point = Point(x=80, y=35)
-        self.new_point = Point(x=80, y=35)
+        self.point = Point(
+            x=pyxel.width//2,
+            y=self.ceiling
+        )
+        self.new_point = copy.copy(self.point)
         self.score = 0
-
-        self.last_frame = pyxel.frame_count
         self.jump = 0
-        self.right = 1
+        self.wait = 50
 
         pyxel.run(self.update, self.draw)
 
@@ -44,8 +46,8 @@ class App:
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
 
-        #  self.move_point()
         self.update_cat()
+        self.update_point()
 
         """
         cat_x = self.cat['pos'][0]
@@ -70,36 +72,31 @@ class App:
         elif self.cat.is_up:
             self.cat.move_down(2)
 
-    def move_point(self):
-        diff_frame = pyxel.frame_count - self.last_frame
-        if diff_frame > self.wait_time:
-            self.point_new = [
-                random.randint(5, pyxel.width - 5),
-                random.randint(35, 60),
-            ]
-            self.last_frame = pyxel.frame_count
-        if self.point != self.point_new:
-            if self.point_new[0] < self.point[0]:
-                self.point[0] -= 1
-            if self.point_new[0] > self.point[0]:
-                self.point[0] += 1
-            if self.point_new[1] < self.point[1]:
-                self.point[1] -= 1
-            if self.point_new[1] > self.point[1]:
-                self.point[1] += 1
+    def update_point(self):
+        if self.point == self.new_point:
+            if self.wait < 0:
+                self.new_point = Point(
+                    x=random.randint(5, pyxel.width - 5),
+                    y=random.randint(self.ceiling + 5, self.floor - 5)
+                )
+                self.wait = random.randint(10, self.max_wait)
+            else:
+                self.wait -= 1
+        else:
+            if self.point.x > self.new_point.x:
+                self.point.x -= 1
+            if self.point.x < self.new_point.x:
+                self.point.x += 1
+            if self.point.y > self.new_point.y:
+                self.point.y -= 1
+            if self.point.y < self.new_point.y:
+                self.point.y += 1
 
     def draw(self):
         pyxel.cls(7)
         self.draw_title()
         self.draw_cat()
-
-        """
-        # Display pointer
-        if self.point == self.point_new:
-            pyxel.circ(*self.point, 1, 8)
-        else:
-            pyxel.pix(*self.point, 8)
-        """
+        self.draw_point()
         self.draw_score()
 
     def draw_title(self):
@@ -117,6 +114,18 @@ class App:
             w=-self.cat.width if self.cat.rigth else self.cat.width,
             h=self.cat.height,
             colkey=self.cat.colkey
+        )
+
+    def draw_point(self):
+        color = 8
+        freq = 15
+        frame = pyxel.frame_count % freq
+        radius = (
+            int(frame < freq/2) 
+            if self.point == self.new_point else 0
+        )
+        pyxel.circ(
+            self.point.x, self.point.y, radius, color
         )
 
     def draw_score(self):
