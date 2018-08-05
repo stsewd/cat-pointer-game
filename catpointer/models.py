@@ -39,6 +39,11 @@ class Cat:
     def is_up(self):
         return self.y + self.height < self.drawing_area[3]
 
+    def has_point(self, point, margin=0):
+        is_in_x = self.x + margin < point.x < self.x + self.width - margin
+        is_in_y = self.y + margin < point.y < self.y + self.height - margin
+        return is_in_x and is_in_y 
+
 
 @dataclass
 class Point:

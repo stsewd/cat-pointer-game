@@ -48,15 +48,7 @@ class App:
 
         self.update_cat()
         self.update_point()
-
-        """
-        cat_x = self.cat['pos'][0]
-        cat_y = self.cat['pos'][1]
-        if self.point == self.point_new:
-            if cat_x + 1 < self.point[0] < cat_x + 15 and cat_y + 1 < self.point[1] < cat_y + 15:
-                self.score += 1
-                self.last_frame = pyxel.frame_count - self.wait_time - 1
-        """
+        self.update_score()
 
     def update_cat(self):
         if self.pressed(pyxel.KEY_LEFT, pyxel.KEY_A):
@@ -75,10 +67,7 @@ class App:
     def update_point(self):
         if self.point == self.new_point:
             if self.wait < 0:
-                self.new_point = Point(
-                    x=random.randint(5, pyxel.width - 5),
-                    y=random.randint(self.ceiling + 5, self.floor - 5)
-                )
+                self.new_point = self.get_random_point()
                 self.wait = random.randint(10, self.max_wait)
             else:
                 self.wait -= 1
@@ -91,6 +80,18 @@ class App:
                 self.point.y -= 1
             if self.point.y < self.new_point.y:
                 self.point.y += 1
+
+    def update_score(self):
+        hit_point = self.cat.has_point(self.point, margin=1)
+        if self.point == self.new_point and hit_point:
+            self.score += 1
+            self.new_point = self.get_random_point()
+
+    def get_random_point(self):
+        return Point(
+            x=random.randint(5, pyxel.width - 5),
+            y=random.randint(self.ceiling + 5, self.floor - 5)
+        )
 
     def draw(self):
         pyxel.cls(7)
@@ -121,7 +122,7 @@ class App:
         freq = 15
         frame = pyxel.frame_count % freq
         radius = (
-            int(frame < freq/2) 
+            int(frame < freq/2)
             if self.point == self.new_point else 0
         )
         pyxel.circ(
