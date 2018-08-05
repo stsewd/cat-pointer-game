@@ -3,6 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='pyxel-catpointer',
     description='Silly game powered by pyxel',
+    long_description_content_type='text/markdown',
     version='0.1.0',
     author='Santos Gallegos',
     author_email='santos_g@outlook.com',
