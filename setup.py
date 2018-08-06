@@ -13,14 +13,14 @@ setup(
     description='Silly game powered by pyxel',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='0.1.2',
+    version='0.1.3',
     author='Santos Gallegos',
     author_email='santos_g@outlook.com',
     license='MIT',
     url='https://github.com/stsewd/cat-pointer-game',
     packages=find_packages(),
     package_data={
-        '': ['game/assets/'],
+        '': ['catpointer/assets/'],
     },
     install_requires=['pyxel<1'],
     entry_points={
