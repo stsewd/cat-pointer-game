@@ -13,7 +13,7 @@ setup(
     description='Silly game powered by pyxel',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='0.1.0',
+    version='0.1.2',
     author='Santos Gallegos',
     author_email='santos_g@outlook.com',
     license='MIT',
